@@ -41,8 +41,8 @@ __interrupt void spiRxFifoIsr(void);
 void delay_loop(void);
 void spi_fifo_init(void);
 void error();
-
-Uint16 sdata[8];     // Send data buffer
+int phaseA[200];
+Uint16 sdata[200];     // Send data buffer
 Uint16 rdata[8];     // Receive data buffer
 Uint16 rdata_point;  // Keep track of where we are
                      // in the data stream to check received data
@@ -96,10 +96,9 @@ void main(void)
 // Step 5. User specific code, enable interrupts:
 
 // Initialize the send data buffer
-   for(i=0; i<8; i++)
-   {
-      sdata[i] = i;
-   }
+ phaseA[]={2,	2,	2,	3,	1,	2,	2,	1,	2,	2,	2,	2,	3,	3,	2,	3,	3,	3,	3,	2,	2,	3,	3,	2,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	2,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	3,	2,	3,	2,	2,	3,	2,	2,	2,	2,	2,	2,	2,	1,	2,	2,	1,	2,	1,	1,	2,	1,	1,	1,	1,	0,	0,	1,	0,	0,	0,	0,	1,	1,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	
+}
+      
    rdata_point = 0;
 
 // Enable interrupts required for this example
@@ -148,12 +147,12 @@ void spi_fifo_init()
 
 __interrupt void spiTxFifoIsr(void)
 {
-// 	Uint16 i;
-//    for(i=0;i<8;i++)
-    //{
- 	   SpiaRegs.SPITXBUF=0xaaaa;  // Send data
-   // }
-
+	Uint16 i;
+   for(i=0;i<200;i++)
+    {
+ 	sdata[i]=phaseA[i]
+   }
+SpiaRegs.SPITXBUF=sdata[i];  // Send data
 //    for(i=0;i<8;i++)                    // Increment data for next cycle
 //    {
 // 	   sdata[i] = sdata[i]+ 1;
